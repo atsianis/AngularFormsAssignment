@@ -1,18 +1,72 @@
-<form [formGroup]="form">
-  <div class="form-group">
-    <label  for="firstNameInput">First Name</label>
-    <input  type="text"
-            class="form-control"
-            id="firstNameInput"
-            placeholder="Enter first name">
+<div class="container">
+  <div class="row">
+    <form [formGroup]="myForm" (submit)=formSubmit(myForm)>
+      <div>
+        <label for="firstNameInput">First Name</label>
+        <input formControlName=firstName type="text" class="form-control" id="firstNameInput"
+          placeholder="Enter first name">
+      </div>
+      <div *ngIf="myForm.get('firstName').invalid && myForm.get('firstName').dirty">
+        <div *ngIf="myForm.get('firstName').errors?.required">
+          Field is required
+        </div>
+        <div *ngIf="myForm.get('firstName').errors?.minlength">
+          The minimum length is 3
+        </div>
+      </div>
+      <div>
+        <label for="lastNameInput">Last Name</label>
+        <input formControlName=lastName type="text" class="form-control" id="lastNameInput"
+          placeholder="Enter last name">
+      </div>
+      <div *ngIf="myForm.get('lastName').invalid && myForm.get('lastName').dirty">
+        <div *ngIf="myForm.get('lastName').errors?.required">
+          Field is required
+        </div>
+        <div *ngIf="myForm.get('lastName').errors?.minlength">
+          The minimum length is 3
+        </div>
+      </div>
+      <hr>
+      <div>
+        <div>
+          <input type="checkbox" formControlName="isExperienced">
+          <label> I am experienced </label>
+        </div>
+      </div>
+      <hr>
+      <label>Angular Preference</label>
+      <br>
+      <input type="radio" formControlName="angular" value="1">
+      <label for="angularjs">angularJs</label>
+      <br>
+      <input type="radio" formControlName="angular" value="2">
+      <label for="angular">angular</label>
+      <div *ngIf="myForm.get('angular').invalid && myForm.get('angular').dirty" class="text-danger">
+        Field is required
+      </div>
+      <hr>
+      <label>Favourite Language</label>
+      <select formControlName="favouriteLanguage">
+        <option [ngValue]="null">Select</option>
+        <option *ngFor="let lang of programmingLanguages">
+          {{lang}}
+        </option>
+      </select>
+      <div *ngIf="myForm.get('favouriteLanguage').invalid && myForm.get('favouriteLanguage').dirty">
+        Field is required
+      </div>
+      <hr>
+      <label>JS Version</label>
+      <input formControlName="jsversion" type="text">
+      <div *ngIf="myForm.get('jsversion').invalid && myForm.get('jsversion').dirty">
+        Field is required
+      </div>
+      <hr>
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
   </div>
-  <div class="form-group">
-    <label  for="lastNameInput">Last Name</label>
-    <input  type="text"
-            class="form-control"
-            id="lastNameInput"
-            placeholder="Enter last name">
-  </div>
-</form>
-
-{{form.value | json}}
+  <hr>
+    {{myForm.value | json}}
+  
+</div>
